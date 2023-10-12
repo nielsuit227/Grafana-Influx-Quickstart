@@ -1,0 +1,42 @@
+version: "3"
+services:
+  influxdb:
+    image: influxdb:latest
+    container_name: influxdb
+    ports:
+      - "8086:8086"
+    environment:
+      - INFLUXDB_DB=mydb
+      - INFLUXDB_ADMIN_USER=admin
+      - INFLUXDB_ADMIN_PASSWORD=admin
+      - INFLUXDB_USER=user
+      - INFLUXDB_USER_PASSWORD=user
+    volumes:
+      - influxdb_data:/var/lib/influxdb
+    networks:
+      - influxdb_network
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_NAME=MainOrg
+      - GF_AUTH_ANONYMOUS_ROLE=Viewer
+      - GF_AUTH_ANONYMOUS_USER=anonymous
+    ports:
+      - "3000:3000"
+    networks:
+      - influxdb_network
+    depends_on:
+      - influxdb
+
+networks:
+  influxdb_network:
+    driver: bridge
+
+volumes:
+  influxdb_data:
