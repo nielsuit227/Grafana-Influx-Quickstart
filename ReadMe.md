@@ -18,7 +18,7 @@ First and foremost, ensure you have Docker installed. If not, follow the [offici
 ### 2. Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/grafana-influxdb-quickstart.git
+git clone https://github.com/nielsuit227/grafana-influxdb-quickstart.git
 cd grafana-influxdb-quickstart
 ```
 
